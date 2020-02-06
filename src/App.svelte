@@ -42,7 +42,7 @@
     const currentValue = document.getElementById('bar').value;
     // data preprocess
     dateString = getDayString(currentValue);
-    const xAxisData = normalize.genRateRange(data, dateString, 'Comfirmed Rate');
+    const xAxisData = normalize.genRateRange(data, dateString, 'Comfirmed Rate', 100);
     const yAxisData = normalize.genRateRange(data, dateString, 'Deaths Variation');
     // d3 update
     const yScale = utils.yAxisScale(yAxisData.min, yAxisData.max);
