@@ -65,7 +65,7 @@
       .join('circle')
         .transition().duration(500)
         .attr('cx', d => xScale(Number.parseFloat(d['Comfirmed Rate'])*100))
-        .attr('cy', d => yScale(Number.parseFloat(d['Deaths Variation'])*100))
+        .attr('cy', d => yScale(Number.parseFloat(d['Deaths Variation'])))
         .attr('r', d => radius(Number.parseInt(d['Total Comfirmed'])))
         .attr('transform', `translate(${adjust}, ${-adjust})`)
   }
