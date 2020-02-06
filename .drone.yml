@@ -7,7 +7,7 @@ steps:
     image: node:10
     commands:
       - yarn install --prod=false
-      - NODE_ENV=production yarn run build && touch out/.nojekyll
+      - NODE_ENV=production yarn run build && touch public/.nojekyll
 
   - name: deploy to github page
     image: plugins/gh-pages
