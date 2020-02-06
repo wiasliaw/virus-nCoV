@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import * as d3 from 'd3';
   import dayjs from 'dayjs';
-  import data from './data/2019-nCoV-v3.json';
+  import data from './data/2019-nCoV.json';
   import utils from './utils/utils.js';
   import {
     width,
