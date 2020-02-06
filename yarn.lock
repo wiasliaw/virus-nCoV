@@ -34,6 +34,11 @@
     magic-string "^0.25.2"
     resolve "^1.11.0"
 
+"@rollup/plugin-html@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-html/-/plugin-html-0.1.1.tgz#0af548c7bf379a654480f0cbc17697f405a4ac1d"
+  integrity sha512-CSrMUBAsNeQunUStd+H/a4zcrKswJq93XSCcUv8EXyhhDN9Xp4NKuUnag8i0pFvh+nq5Way+OzK6XVcgXR9adg==
+
 "@rollup/plugin-json@^4.0.2":
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-json/-/plugin-json-4.0.2.tgz#482185ee36ac7dd21c346e2dbcc22ffed0c6f2d6"
