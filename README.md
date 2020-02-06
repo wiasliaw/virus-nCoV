@@ -21,5 +21,13 @@ Server will host at [localhost:5000](http://localhost:5000)
 ## Production
 
 ```bash
-npm run build
+yarn run build
+```
+
+## Deploy
+
+Deploy by command on local or by Drone CI/CD
+
+```bash
+yarn run deploy
 ```
