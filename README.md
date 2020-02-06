@@ -1,6 +1,6 @@
 # virus-nCoV
-[![Build Status](https://cloud.drone.io/api/badges/wiasliaw77210/virus-ConV/status.svg)](https://cloud.drone.io/wiasliaw77210/virus-ConV)
 
+[![Build Status](https://cloud.drone.io/api/badges/wiasliaw77210/virus-ConV/status.svg)](https://cloud.drone.io/wiasliaw77210/virus-ConV)
 
 ## Install
 
