@@ -44,6 +44,7 @@
     dateString = getDayString(currentValue);
     const xAxisData = normalize.genRateRange(data, dateString, 'Comfirmed Rate', 100);
     const yAxisData = normalize.genRateRange(data, dateString, 'Deaths Variation');
+    console.log(xAxisData);
     // d3 update
     const yScale = utils.yAxisScale(yAxisData.min, yAxisData.max);
     const xScale = utils.xAxisScale(xAxisData.min, xAxisData.max);
