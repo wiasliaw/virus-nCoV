@@ -5,7 +5,7 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public",
-    "deploy": "NODE_ENV=production yarn build && touch public/.nojekyll && gh-pages -t -d public"
+    "deploy": "NODE_ENV=production yarn build && mv public/build/index.html public/ && touch public/.nojekyll && gh-pages -t -d public"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.0",
