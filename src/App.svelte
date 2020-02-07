@@ -163,7 +163,7 @@
   <br>
   確診增加率（％）：{messageVariable.confirm_rate}(X軸)
   <br>
-  （<strong>總確診數</strong>除以<strong>當日新增確診數</strong>）
+  （<strong>當日新增確診數</strong>除以<strong>總確診數</strong>）
 </div>
 <input
   type="range"
