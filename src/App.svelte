@@ -2,7 +2,6 @@
   import { onMount } from 'svelte';
   import * as d3 from 'd3';
   import dayjs from 'dayjs';
-  import data from './data/2019-nCoV.json';
   import utils from './utils/utils.js';
   import {
     width,
@@ -11,9 +10,13 @@
     adjust,
     countryColorMap,
   } from './utils/config.js';
-  import normalize from './normalize.js';
+  import normalize from './utils/normalize.js';
+  import fetchData from './utils/fetchData.js';
 
   // share variables
+  const minimum = '20200122';
+  let dateString = '';
+  let drawData = null;
   let messageVariable = {
     country: '',
     province: '',
@@ -24,26 +27,28 @@
     death: '',
     confirm_rate: '',
   };
-  let dateString = '';
 
   // functions define
   const getDayString = (n) => {
-    return dayjs('20200131', 'YYYYMMDD')
+    return dayjs(minimum, 'YYYYMMDD')
       .add(n, 'day')
       .format('YYYYMMDD');
   }
 
-  const getDataCount = (data) => {
-    return Object.keys(data).length - 1;
+  const getDataCount = () => {
+    const between = dayjs(dayjs(), 'YYYYMMDD').unix() - dayjs(minimum, 'YYYYMMDD').unix();
+    // exclude today
+    return Math.floor(between/(24*60*60)) - 1;
   };
 
   // event function
-  const handleChange = () => {
-    const currentValue = document.getElementById('bar').value;
+  const handleChange = async () => {
+    const currentValue = document.getElementById('bar').value;    
     // data preprocess
     dateString = getDayString(currentValue);
-    const xAxisData = normalize.genRateRange(data, dateString, 'Comfirmed Rate', 100);
-    const yAxisData = normalize.genRateRange(data, dateString, 'Deaths Variation');
+    drawData = await fetchData(dateString);
+    const xAxisData = normalize.genRateRange(drawData, dateString, 'Comfirmed Rate', 100);
+    const yAxisData = normalize.genRateRange(drawData, dateString, 'Deaths Variation');
     // d3 update
     const yScale = utils.yAxisScale(yAxisData.min, yAxisData.max);
     const xScale = utils.xAxisScale(xAxisData.min, xAxisData.max);
@@ -61,7 +66,7 @@
     d3.select('#xgrid').call(utils.xGridDraw(xScale, xAxisData, 500));
     d3.select('#ygrid').call(utils.yGridDraw(yScale, yAxisData, 500));
     d3.select('#g-circle').selectAll('circle')
-      .data(data[dateString])
+      .data(drawData[dateString])
       .join('circle')
         .transition().duration(500)
         .attr('cx', d => xScale(Number.parseFloat(d['Comfirmed Rate'])*100))
@@ -70,11 +75,14 @@
         .attr('transform', `translate(${adjust}, ${-adjust})`)
   }
 
-  onMount(() => {
-    // data preprocess
+  onMount(async () => {
+    // fetch raw data
     dateString = getDayString(0);
-    const xAxisData = normalize.genRateRange(data, dateString, 'Comfirmed Rate', 100);
-    const yAxisData = normalize.genRateRange(data, dateString, 'Deaths Variation');
+    drawData = await fetchData(dateString);
+
+    // data preprocess
+    const xAxisData = normalize.genRateRange(drawData, dateString, 'Comfirmed Rate', 100);
+    const yAxisData = normalize.genRateRange(drawData, dateString, 'Deaths Variation');
 
     // d3 data preprocess
     const yScale = utils.yAxisScale(yAxisData.min, yAxisData.max);
@@ -116,7 +124,7 @@
     const circle = svg.append('g')
       .attr('id', 'g-circle')
       .selectAll('circle')
-      .data(data[dateString])
+      .data(drawData[dateString])
       .join('circle')
         .attr('cx', d => xScale(Number.parseFloat(d['Comfirmed Rate'])*100))
         .attr('cy', d => yScale(Number.parseFloat(d['Deaths Variation'])))
@@ -146,7 +154,7 @@
 <main></main>
 <div id="message">
   國家：{messageVariable.country}
-  {#if messageVariable.province !== undefined}
+  {#if messageVariable.province !== ""}
     <br>
     省份：{messageVariable.province}
   {/if}
@@ -170,7 +178,7 @@
   name="i"
   id="bar"
   min="0"
-  max={getDataCount(data)}
+  max={getDataCount(10)}
   value="0"
   style="width: 180px;"
   on:change={handleChange}
