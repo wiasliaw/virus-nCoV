@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
  */
 const fetchData = async (date) => {
   const formatDate = dayjs(date, 'YYYYMMDD').format('YYYY-MM-DD');
-  const rawData = await fetch(`http://140.116.247.124:2019/nCoV/query/?date=${formatDate}`, {
+  const rawData = await fetch(`https://dcmoe.csie.ncku.edu.tw/nCoV/query/?date=${formatDate}`, {
     method: 'GET',
     mode: 'cors'
   }).then(resp => resp.json())
