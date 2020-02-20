@@ -62,6 +62,5 @@ const genRateRange = (data, date, field, zoom=1) => {
 }
 
 export default {
-  obj2Array,
   genRateRange,
 }
