@@ -147,6 +147,15 @@
           document.getElementById('message').style.display = 'block';
         })
         .on('mouseout', () => document.getElementById('message').style.display = 'none');
+    // timer
+    const timer = setInterval(() => {
+      const v = document.getElementById('bar').value;
+      document.getElementById('bar').value =  Number.parseInt(v) + 1;
+      handleChange();
+    }, 1000);
+    return () => {
+      clearInterval(timer);
+    }
   });
 </script>
 
