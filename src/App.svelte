@@ -27,6 +27,7 @@
     death: '',
     confirm_rate: '',
   };
+  let timer = null;
 
   // functions define
   const getDayString = (n) => {
@@ -40,6 +41,24 @@
     // exclude today
     return Math.floor(between/(24*60*60)) - 1;
   };
+
+  const setTimer = () => {
+    if (document.getElementById('bar')) {
+      document.getElementById('bar').value = 0;
+    }
+    if (!timer) {
+      timer = setInterval(() => {
+        const v = document.getElementById('bar').value
+        document.getElementById('bar').value = Number.parseInt(v) + 1;
+        handleChange();
+      }, 1000);
+    }
+  }
+
+  const clearTimer = () => {
+    clearInterval(timer);
+    timer = null;
+  }
 
   // d3 data preprocess
   const yScale = utils.yAxisScale(0, analysis.maxDeathVariation);
@@ -148,14 +167,7 @@
         })
         .on('mouseout', () => document.getElementById('message').style.display = 'none');
     // timer
-    const timer = setInterval(() => {
-      const v = document.getElementById('bar').value;
-      document.getElementById('bar').value =  Number.parseInt(v) + 1;
-      handleChange();
-    }, 1000);
-    return () => {
-      clearInterval(timer);
-    }
+    setTimer();
   });
 </script>
 
@@ -190,8 +202,12 @@
   value="0"
   style="width: 180px;"
   on:change={handleChange}
+  on:mousedown={clearTimer}
 />
 <span>{dateString}</span>
+<button on:click={setTimer}>
+  play
+</button>
 
 <style>
   main {
