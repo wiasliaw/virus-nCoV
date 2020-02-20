@@ -8,6 +8,9 @@ steps:
     commands:
       - yarn install --prod=false
       - NODE_ENV=production yarn run build && mv public/build/index.html public/ && touch public/.nojekyll
+    environment:
+      MAIN_HOST:
+        from_secret: main_host
 
   - name: deploy to github page
     image: plugins/gh-pages
